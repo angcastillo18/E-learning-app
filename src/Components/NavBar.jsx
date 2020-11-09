@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 
 export default function NavBar() {
   const [navbarOpen, setNavbarOpen] = useState(false);
+
   return (
     <>
       <nav className='relative flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-white  shadow '>
@@ -50,6 +51,7 @@ export default function NavBar() {
                 <Link
                   className='py-2 lg:py-1 xl:text-xl text-base  font-bold leading-snug  text-black hover:opacity-75'
                   to='/'
+                  onClick={() => setNavbarOpen(!navbarOpen)}
                 >
                   <span className=''>Inicio</span>
                 </Link>
@@ -58,6 +60,7 @@ export default function NavBar() {
                 <Link
                   className='py-2 lg:py-1 xl:text-xl text-base font-bold leading-snug  text-black hover:opacity-75'
                   to='/courses'
+                  onClick={() => setNavbarOpen(!navbarOpen)}
                 >
                   <span className=''>Cursos</span>
                 </Link>
@@ -66,6 +69,7 @@ export default function NavBar() {
                 <Link
                   className='py-2  px-3 lg:py-1 xl:text-lg xl:py-2  rounded-full bg-white border-yellow-500 border-2 flex items-center justify-center text-base font-bold leading-snug text-white hover:opacity-75'
                   to='/register'
+                  onClick={() => setNavbarOpen(!navbarOpen)}
                 >
                   <span className='text-black'>Crear cuenta</span>
                 </Link>
@@ -74,6 +78,7 @@ export default function NavBar() {
                 <Link
                   className=' py-2 px-4 lg:py-1 xl:text-lg xl:py-2 rounded-full bg-black flex items-center justify-center text-base font-bold leading-snug text-white hover:opacity-75'
                   to='/login'
+                  onClick={() => setNavbarOpen(!navbarOpen)}
                 >
                   <span className='text-yellow-500'>Iniciar Sesión</span>
                 </Link>

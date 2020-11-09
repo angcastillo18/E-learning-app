@@ -1,13 +1,24 @@
 import React from "react";
-
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 export default function Register() {
+  const { register, watch, handleSubmit, errors, reset } = useForm();
+  const watchPassword = watch("password", "");
+  const onSubmit = (data, e) => {
+    console.log(data);
+    /* e.target.reset(); */
+    reset();
+  };
   return (
     <div className='flex justify-center items-center bg-gradient-to-r from-gray-500 to-gray-800'>
       <div className='w-full max-w-md px-2 my-8 lg:my-20'>
         <h3 className='text-2xl font-bold text-center my-6 text-white lg:text-3xl'>
           <span className='text-yellow-500'>R</span>egister
         </h3>
-        <form action='' className='bg-white shadow-md rounded px-8 py-8 my-4'>
+        <form
+          className='bg-white shadow-md rounded px-8 py-8 my-4'
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className='mb-4'>
             <label
               htmlFor='name'
@@ -17,10 +28,18 @@ export default function Register() {
             </label>
             <input
               type='text'
-              className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-lg lg:py-3'
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-lg lg:py-3 
+              ${errors.name ? "border-red-500 focus:shadow-none" : ""} `}
               id='name'
+              name='name'
               placeholder='Ingrese su nombre...'
+              ref={register({
+                required: true,
+              })}
             />
+            {errors.name && errors.name.type === "required" && (
+              <p className='text-red-600 text-sm my-1'>Nombre requerido</p>
+            )}
           </div>
           <div className='mb-6'>
             <label
@@ -31,10 +50,22 @@ export default function Register() {
             </label>
             <input
               type='text'
-              className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-lg lg:py-3'
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-lg lg:py-3 
+              ${errors.email ? "border-red-500 focus:shadow-none" : ""} `}
               id='email'
               placeholder='Ingrese su correo...'
+              name='email'
+              ref={register({
+                required: true,
+                pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+              })}
             />
+            {errors.email && errors.email.type === "required" && (
+              <p className='text-red-600 text-sm my-1'>Email requerido</p>
+            )}
+            {errors.email && errors.email.type === "pattern" && (
+              <p className='text-red-600 text-sm my-1'>Email inválido</p>
+            )}
           </div>
           <div className='mb-6'>
             <label
@@ -45,10 +76,19 @@ export default function Register() {
             </label>
             <input
               type='password'
-              className='shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline lg:text-lg lg:py-3'
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-lg lg:py-3 
+              ${errors.password ? "border-red-500 focus:shadow-none" : ""} `}
               id='password'
               placeholder='Ingrese su contraseña..'
+              ref={register({ required: true, minLength: 6 })}
+              name='password'
             />
+            {errors.password && errors.password.type === "required" && (
+              <p className='text-red-600 text-sm my-1'>Contraseña requerida</p>
+            )}
+            {errors.password && errors.password.type === "minLength" && (
+              <p className='text-red-600 text-sm my-1'>Mínimo 6 caracteres</p>
+            )}
           </div>
           <div className='mb-6'>
             <label
@@ -59,24 +99,44 @@ export default function Register() {
             </label>
             <input
               type='password'
-              className='shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline lg:text-lg lg:py-3'
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:text-lg lg:py-3 
+              ${
+                errors.confirmPassword ? "border-red-500 focus:shadow-none" : ""
+              } `}
               id='confirmPassword'
               placeholder='Ingrese su contraseña..'
+              name='confirmPassword'
+              ref={register({
+                required: true,
+                validate: (value) => value === watchPassword,
+              })}
             />
+            {errors.confirmPassword &&
+              errors.confirmPassword.type === "required" && (
+                <p className='text-red-600 text-sm my-1'>
+                  Contraseña requerida
+                </p>
+              )}
+            {errors.confirmPassword &&
+              errors.confirmPassword.type === "validate" && (
+                <p className='text-red-600 text-sm my-1'>
+                  Contraseña no coincide
+                </p>
+              )}
           </div>
           <div className='flex items-center justify-between'>
             <button
               className='bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-              type='button'
+              type='submit'
             >
               Registrarme
             </button>
-            <a
+            <Link
               className='inline-block align-baseline font-bold text-sm text-right text-yellow-500 hover:text-yellow-800'
-              href='#f'
+              to='/login'
             >
               Ya tienes una cuenta?
-            </a>
+            </Link>
           </div>
         </form>
       </div>
