@@ -8,29 +8,37 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Courses from "./pages/Courses";
+import { AuthProvider } from "./contexts/AuthContext";
+import MyCourses from "./pages/MyCourses";
+
 function App() {
   return (
     <Router>
-      <div>
-        <NavBar />
+      <AuthProvider>
+        <div>
+          <NavBar />
 
-        <Switch>
-          <Route path='/courses'>
-            <Courses />
-          </Route>
-          <Route path='/login'>
-            <Login />
-          </Route>
-          <Route path='/register'>
-            <Register />
-          </Route>
-          <Route path='/'>
-            <Home />
-          </Route>
-        </Switch>
+          <Switch>
+            <Route path='/user/mycourses'>
+              <MyCourses />
+            </Route>
+            <Route path='/courses'>
+              <Courses />
+            </Route>
+            <Route path='/login'>
+              <Login />
+            </Route>
+            <Route path='/register'>
+              <Register />
+            </Route>
+            <Route path='/'>
+              <Home />
+            </Route>
+          </Switch>
 
-        <Footer />
-      </div>
+          <Footer />
+        </div>
+      </AuthProvider>
     </Router>
   );
 }
