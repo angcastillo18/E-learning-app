@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { HashLoader } from "react-spinners";
 export default function Login() {
   const { register, handleSubmit, errors, reset } = useForm();
-
-  const onSubmit = (data) => {
-    console.log(data);
+  const { login } = useAuth();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
+  const onSubmit = async (data) => {
+    /* console.log(data); */
+    try {
+      setLoading(true);
+      await login(data.email, data.password);
+      history.push("/user/mycourses");
+    } catch (error) {
+      setError(error.message);
+    }
+    setLoading(false);
     reset();
   };
 
@@ -14,6 +28,21 @@ export default function Login() {
         <h3 className='text-2xl font-bold text-center my-6 text-white lg:text-3xl'>
           <span className='text-yellow-500'>L</span>ogin
         </h3>
+        {/*show alert when exist error*/}
+        {error && (
+          <div
+            className='text-white px-6 py-4 border-0 rounded relative mb-4 bg-red-400'
+            role='alert'
+          >
+            <span className='inline-block align-middle mr-8'>{error}</span>
+            <button
+              className='absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none'
+              onClick={() => setError("")}
+            >
+              <span>×</span>
+            </button>
+          </div>
+        )}
         <form
           onSubmit={handleSubmit(onSubmit)}
           className='bg-white shadow-md rounded px-8 py-8 my-4'
@@ -80,6 +109,9 @@ export default function Login() {
             >
               Olvidasté tu contraseña?
             </a>
+          </div>
+          <div className='flex justify-center my-3'>
+            <HashLoader loading={loading} color={"#2A4365"} />
           </div>
         </form>
       </div>
