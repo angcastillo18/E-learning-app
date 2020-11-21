@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import Courses from "./pages/Courses";
 import { AuthProvider } from "./contexts/AuthContext";
 import MyCourses from "./pages/MyCourses";
+import PrivateRoute from "./Components/PrivateRoute";
 
 function App() {
   return (
@@ -19,21 +20,11 @@ function App() {
           <NavBar />
 
           <Switch>
-            <Route path='/user/mycourses'>
-              <MyCourses />
-            </Route>
-            <Route path='/courses'>
-              <Courses />
-            </Route>
-            <Route path='/login'>
-              <Login />
-            </Route>
-            <Route path='/register'>
-              <Register />
-            </Route>
-            <Route path='/'>
-              <Home />
-            </Route>
+            <PrivateRoute path='/user/mycourses' component={MyCourses} />
+            <Route path='/courses' component={Courses} />
+            <Route path='/login' component={Login} />
+            <Route path='/register' component={Register} />
+            <Route path='/' component={Home} />
           </Switch>
 
           <Footer />
