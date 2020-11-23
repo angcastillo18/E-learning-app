@@ -11,6 +11,7 @@ import Courses from "./pages/Courses";
 import { AuthProvider } from "./contexts/AuthContext";
 import MyCourses from "./pages/MyCourses";
 import PrivateRoute from "./Components/PrivateRoute";
+/* import { app } from "./firebase"; */
 
 function App() {
   return (

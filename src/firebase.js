@@ -1,5 +1,8 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/firebase-firestore";
+//*CREATE DATABASE OF COURSES
+/* import { createDatabase } from "./createCoursesDB"; */
 
 const app = firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -11,5 +14,8 @@ const app = firebase.initializeApp({
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 });
 
+/* createDatabase(app); */
+
 export const auth = app.auth();
+export const firebaseDb = app.firestore();
 export default app;

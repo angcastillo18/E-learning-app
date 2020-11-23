@@ -85,7 +85,7 @@ export default function NavBar() {
                       className='mr-2 text-gray-500 text-2xl '
                       icon={faUserCircle}
                     />
-                    <h5>{currentUser.email.split("@")[0].toUpperCase()}</h5>
+                    <h5>{currentUser.displayName}</h5>
                   </button>
                   <ul className='dropdown-menu absolute hidden text-gray-700 pt-1'>
                     <li>

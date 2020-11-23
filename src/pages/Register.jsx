@@ -11,13 +11,15 @@ export default function Register() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-  //*handlesubmit
+  //*handlesubmit event
   const onSubmit = async (data, e) => {
     console.log(data.email);
-    //*Registrar con firebase,async event
+    //*Register with firebase,async event
     try {
       setLoading(true);
-      await signup(data.email, data.password);
+      const result = await signup(data.email, data.password);
+      //*update displayName
+      result.user.updateProfile({ displayName: data.name });
       history.push("/user/mycourses");
     } catch (error) {
       //console.log("failed to create an acount");
